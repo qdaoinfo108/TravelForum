@@ -4,6 +4,9 @@
     Author     : Admin
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="model.Status"%>
+<%@page import="model.Account"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -14,12 +17,8 @@
         <link href="common-css/bootstrap.css" rel="stylesheet">
 
         <link href="common-css/ionicons.css" rel="stylesheet">
-
-
         <link href="single-post-1/css/styles.css" rel="stylesheet">
-
         <link href="single-post-1/css/responsive.css" rel="stylesheet">
-
 
         <link href="front-page-category/css/styles.css" rel="stylesheet">
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
@@ -30,123 +29,70 @@
     <body>
         <jsp:include page="header.jsp"/>
 
+        <% String email = (String) session.getAttribute("email");
+            Account acc = dao.LoginAccount.getInfoAccount(email);
+            String img = dao.LoginAccount.getImgAccount(email);
 
+            ArrayList<Status> listTrue = dao.StatusDAO.getAllStatusTrueByAccount(email);
+        %>
         <div class="slider">
             <div class="display-table  center-text">
-                <h1 class="title display-table-cell"><b>Xin chào, user</b></h1>
+                <h1 class="title display-table-cell"><b>Xin chào, <%= session.getAttribute("sessionname")%></b></h1>
             </div>
         </div><!-- slider -->
 
-
-        <section class="post-area section">
+        <section class="blog-area section">
             <div class="container">
 
                 <div class="row">
+                    <div class="col-lg-8 col-md-12">
+                        <div class="row">
+                            <% for (int i = 0; i < listTrue.size(); i++) {%>
 
-                    <div class="col-lg-8 col-md-12 no-right-padding">
+                            <div class="col-md-6 col-sm-12">
+                                <div class="card h-100">
+                                    <div class="single-post post-style-1">
 
-                        <div class="main-post">
+                                        <div class="blog-image"><img src="<% if (listTrue.get(i).getStatus_image().equals("images/status/")) { %>
+                                                                     images/default-banner.jpg
+                                                                     <% } else {%>
+                                                                     <%= listTrue.get(i).getStatus_image()%>
+                                                                     <% } %>     " alt="Blog Image"></div>
 
-                            <div class="blog-post-inner">
-                                <h4>Các bài post trước đó :</h4>
-                                <div class="post-info">
+                                        <a class="avatar" href="#"><img src="<% if (acc.getImage() == null) { %>
+                                                                        images/default-avatar.jpeg
+                                                                        <% } else {%>
+                                                                        <%= img%>
+                                                                        <% }%>" alt="Profile Image">"</a>
 
-                                    <div class="left-area">
-                                        <a class="avatar" href="#"><img src="images/avatar-1-120x120.jpg" alt="Profile Image"></a>
-                                    </div>
+                                        <div class="blog-info">
 
-                                    <div class="middle-area">
-                                        <a class="name" href="#"><b>Katy Liu</b></a>
-                                        <h6 class="date">on Sep 29, 2017 at 9:48 am</h6>
-                                    </div>
+                                            <h4 class="title"><a href="#"><b><%= listTrue.get(i).getStatus_content()%></b></a></h4>
 
-                                </div><!-- post-info -->
+                                            <ul class="post-footer">
+                                                <li><a href="#"><i class="ion-heart"></i>57</a></li>
+                                                <li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
+                                                <li><a href="#"><i class="ion-eye"></i><%= listTrue.get(i).getStatus_view()%></a></li>
+                                            </ul>
 
-                                <h3 class="title"><a href="#"><b>Lưu ý khi đến chợ đêm Đà Lạt !!</b></a></h3>
+                                        </div><!-- blog-info -->
+                                    </div><!-- single-post -->
+                                </div><!-- card -->
+                            </div><!-- col-md-6 col-sm-12 -->
 
-                                <p class="para">review quán nào ngon quán nào dở bla bla ...</p>
+                            <% }%>
+                        </div><!-- row -->
 
-                                <!--                                <div class="post-image"><img src="images/blog-1-1000x600.jpg" alt="Blog Image"></div>-->
+                        <a class="load-more-btn" href="#"><b>LOAD MORE</b></a>
 
-                                <p class="para" style="color:red">Chỗ này chạy vòng for rồi phân trang ....
-                                Nếu là tài khoản admin thì phải thêm 1 mục duyệt bài</p>
-                                  
-                            </div><!-- blog-post-inner -->
-
-                            <div class="post-icons-area">
-                                <ul class="post-icons">
-                                    <li><a href="#"><i class="ion-heart"></i>57</a></li>
-                                    <li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
-                                    <li><a href="#"><i class="ion-eye"></i>138</a></li>
-                                </ul>
-
-                                <ul class="icons">
-                                    <li>SHARE : </li>
-                                    <li><a href="#"><i class="ion-social-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                    <li><a href="#"><i class="ion-social-pinterest"></i></a></li>
-                                </ul>
-                            </div>
-
-                            <!-- <div class="post-footer post-info">
-
-                                    <div class="left-area">
-                                            <a class="avatar" href="#"><img src="images/avatar-1-120x120.jpg" alt="Profile Image"></a>
-                                    </div>
-
-                                    <div class="middle-area">
-                                            <a class="name" href="#"><b>Katy Liu</b></a>
-                                            <h6 class="date">on Sep 29, 2017 at 9:48 am</h6>
-                                    </div>
-
-                            </div>post-info -->
-
-
-                        </div><!-- main-post -->
                     </div><!-- col-lg-8 col-md-12 -->
-                    <div class="col-lg-4 col-md-12 no-left-padding">
 
-                        <div class="single-post info-area">
-
-                            <div class="sidebar-area about-area">
-                                <h4 class="title"><b>Thông tin tài khoản</b></h4>
-                                <p>user : ... </p>
-                                <p>Name : .....</p>
-                                <p>Loại tài khoản : ....</p>
-                            </div>
-
-                            <div class="tag-area">
-
-                                <h4 class="title"><b>Các chức năng khác</b></h4>
-                                <ul>
-                                    <li><a href="#">Nếu tài khoản admin thì là Duyệt bài</a></li>
-                                    
-                                </ul>
-
-                            </div><!-- subscribe-area -->
-                            
-                            <div class="sidebar-area subscribe-area">
-
-                                <h4 class="title"><b>SUBSCRIBE</b></h4>
-                                <div class="input-area">
-                                    <form>
-                                        <input class="email-input" type="text" placeholder="Enter your email">
-                                        <button class="submit-btn" type="submit"><i class="icon ion-ios-email-outline"></i></button>
-                                    </form>
-                                </div>
-
-                            </div><!-- subscribe-area -->
-
-                            
-
-                        </div><!-- info-area -->
-
-                    </div><!-- col-lg-4 col-md-12 -->
+                    <jsp:include page="incluInfoAccount.jsp"/>
 
                 </div><!-- row -->
 
             </div><!-- container -->
-        </section><!-- post-area -->
+        </section><!-- section -->
 
         <jsp:include page="footer.jsp"/>
     </body>

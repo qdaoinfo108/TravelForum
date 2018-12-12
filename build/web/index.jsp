@@ -25,11 +25,23 @@
 	<link href="front-page-category/css/styles.css" rel="stylesheet">
 
 	<link href="front-page-category/css/responsive.css" rel="stylesheet">
+        
+        <link href="common-css/bootstrap.css" rel="stylesheet">
+
+	<link href="common-css/ionicons.css" rel="stylesheet">
+
+
+	<link href="single-post-1/css/styles.css" rel="stylesheet">
+
+	<link href="single-post-1/css/responsive.css" rel="stylesheet">
     </head>
     <body>
 
         <jsp:include page="header.jsp"/>
         <jsp:include page="banner.jsp"/>
+        <jsp:include page="postStt.jsp"/>
+        
+        
         <jsp:include page="blog.jsp"/>
         <jsp:include page="footer.jsp"/>
                 
